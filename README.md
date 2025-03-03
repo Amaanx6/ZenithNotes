@@ -1,6 +1,5 @@
 # **Zenith Notes: Your Ultimate Study Companion**
 
-![Zenith Notes Banner](https://via.placeholder.com/1200x400) <!-- Add a banner image here -->
 
 ### **📘 Overview**
 
