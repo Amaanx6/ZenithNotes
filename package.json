@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "cd frontend && npm run build", 
     "lint": "eslint .",
     "preview": "vite preview",
     "start:frontend": "cd frontend && npm run dev",
     "start:backend": "cd backend && npm run dev",
-    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
