@@ -1,81 +1,89 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Menu, X, BookOpen } from 'lucide-react';
+import { Book, Menu, X } from 'lucide-react';
 
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 10);
     };
-
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-dark-950/95 backdrop-blur-sm shadow-md' : 'bg-transparent'}`}>
-      <div className="container-custom mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <motion.header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-dark/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <BookOpen className="h-6 w-6 text-primary-500" />
-              <span className="ml-2 text-lg font-bold text-white">Zenith Notes</span>
-            </Link>
+            <a href="/" className="flex items-center space-x-2">
+              <Book className="h-8 w-8 text-primary" />
+              <span className="text-xl font-heading font-bold text-white">Zenith Notes</span>
+            </a>
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-300 hover:text-white transition-colors text-sm">Home</Link>
-            <a href="#features" className="text-gray-300 hover:text-white transition-colors text-sm">Features</a>
-            <a href="#how-it-works" className="text-gray-300 hover:text-white transition-colors text-sm">How It Works</a>
-            <a href="#testimonials" className="text-gray-300 hover:text-white transition-colors text-sm">Testimonials</a>
-            <a href="#contact" className="text-gray-300 hover:text-white transition-colors text-sm">Contact</a>
-            <div className="flex space-x-2">
-              <Link to="/auth" className="px-4 py-1.5 text-sm text-white hover:text-primary-400 transition-colors">Login</Link>
-              <Link to="/auth" className="px-4 py-1.5 text-sm bg-primary-600 hover:bg-primary-700 text-white rounded-md transition-colors">Sign Up</Link>
-            </div>
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#home" className="text-gray-300 hover:text-white transition-colors">Home</a>
+            <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
+            <a href="#how-it-works" className="text-gray-300 hover:text-white transition-colors">How It Works</a>
+            <a href="#testimonials" className="text-gray-300 hover:text-white transition-colors">Testimonials</a>
+            <a href="#contact" className="text-gray-300 hover:text-white transition-colors">Contact</a>
+          </nav>
+          
+          {/* Auth Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            <button className="btn-outline">Login</button>
+            <button className="btn-primary">Sign Up</button>
           </div>
           
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-dark-800 focus:outline-none"
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-gray-300 hover:text-white"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </div>
-
-      {/* Mobile menu */}
-      {isOpen && (
+      
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
         <motion.div 
+          className="md:hidden bg-dark-lighter border-t border-dark-light"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-dark-900"
+          transition={{ duration: 0.3 }}
         >
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-dark-800">Home</Link>
-            <a href="#features" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800">Features</a>
-            <a href="#how-it-works" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800">How It Works</a>
-            <a href="#testimonials" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800">Testimonials</a>
-            <a href="#contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800">Contact</a>
-            <Link to="/auth" className="block px-3 py-2 rounded-md text-base font-medium text-primary-400 hover:text-primary-300">Login</Link>
-            <Link to="/auth" className="block px-3 py-2 rounded-md text-base font-medium bg-primary-600 text-white hover:bg-primary-700">Sign Up</Link>
+          <div className="container mx-auto px-4 py-4 space-y-2">
+            <a href="#home" className="block py-2 text-gray-300 hover:text-white">Home</a>
+            <a href="#features" className="block py-2 text-gray-300 hover:text-white">Features</a>
+            <a href="#how-it-works" className="block py-2 text-gray-300 hover:text-white">How It Works</a>
+            <a href="#testimonials" className="block py-2 text-gray-300 hover:text-white">Testimonials</a>
+            <a href="#contact" className="block py-2 text-gray-300 hover:text-white">Contact</a>
+            <div className="pt-4 flex flex-col space-y-3">
+              <button className="btn-outline w-full">Login</button>
+              <button className="btn-primary w-full">Sign Up</button>
+            </div>
           </div>
         </motion.div>
       )}
-    </nav>
+    </motion.header>
   );
 };
 

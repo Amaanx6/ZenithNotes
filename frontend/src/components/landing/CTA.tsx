@@ -1,9 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 
-const features = [
+const benefits = [
   'Access to all study materials in one place',
   'AI-powered note generation and summaries',
   'Collaborative study tools and discussion forums',
@@ -13,95 +12,100 @@ const features = [
 
 const CTA: React.FC = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-dark-900 to-dark-950">
-      <div className="container-custom">
-        <div className="flex flex-col lg:flex-row gap-12">
+    <section className="py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative">
+          {/* Background Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl blur-xl"></div>
+          
           <motion.div 
+            className="relative bg-dark-card rounded-3xl overflow-hidden border border-dark-light"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="w-full lg:w-1/2"
           >
-            <h2 className="text-3xl font-bold mb-4">Ready to Transform Your <span className="text-primary-400">Study Experience</span>?</h2>
-            <p className="text-gray-400 mb-8">
-              Join thousands of students who are already using Zenith Notes to improve their academic performance and study more efficiently.
-            </p>
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
             
-            <div className="space-y-4 mb-8">
-              {features.map((feature, index) => (
-                <div key={index} className="flex items-start">
-                  <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-500" />
+            <div className="p-8 md:p-12 lg:p-16">
+              <div className="flex flex-col lg:flex-row items-center">
+                <div className="lg:w-2/3 mb-10 lg:mb-0">
+                  <h2 className="heading text-3xl md:text-4xl mb-6">
+                    Ready to Transform Your <span className="gradient-text">Study Experience</span>?
+                  </h2>
+                  
+                  <p className="text-gray-300 text-lg mb-8 max-w-2xl">
+                    Join thousands of students who are already using Zenith Notes to improve their academic performance and study more efficiently.
+                  </p>
+                  
+                  <ul className="space-y-3 mb-8">
+                    {benefits.map((benefit, index) => (
+                      <motion.li 
+                        key={index}
+                        className="flex items-start"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                      >
+                        <CheckCircle className="h-6 w-6 text-secondary flex-shrink-0 mr-3" />
+                        <span className="text-gray-300">{benefit}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                  
+                  <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button className="btn-primary group text-lg">
+                      Join Zenith Notes Today
+                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
+                    </button>
+                    <button className="btn-outline text-lg">
+                      Learn More
+                    </button>
                   </div>
-                  <p className="ml-3 text-gray-300">{feature}</p>
-                </div>
-              ))}
-            </div>
-            
-            <div className="flex flex-wrap gap-4">
-              <Link to="/auth" className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-md font-medium transition-all duration-300 flex items-center">
-                Join Zenith Notes Today
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-              <a href="#features" className="bg-dark-800 hover:bg-dark-700 text-white px-6 py-3 rounded-md font-medium transition-all duration-300">
-                Learn More
-              </a>
-            </div>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-full lg:w-1/2"
-          >
-            <div className="bg-dark-800 rounded-xl p-8 border border-dark-700">
-              <h3 className="text-xl font-bold mb-6 text-center">Sign Up For Free</h3>
-              
-              <form className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-1">Full Name</label>
-                  <input 
-                    type="text" 
-                    id="name" 
-                    className="w-full bg-dark-700 border border-dark-600 rounded-md py-2 px-4 text-white focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="Enter your name"
-                  />
                 </div>
                 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-1">Email Address</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    className="w-full bg-dark-700 border border-dark-600 rounded-md py-2 px-4 text-white focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="Enter your email"
-                  />
+                <div className="lg:w-1/3 lg:pl-12">
+                  <div className="bg-dark p-6 rounded-xl border border-dark-light">
+                    <h3 className="text-xl font-bold mb-4 text-center">Sign Up For Free</h3>
+                    <form className="space-y-4">
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-1">Full Name</label>
+                        <input 
+                          type="text" 
+                          id="name" 
+                          className="w-full px-4 py-2 bg-dark-lighter border border-dark-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                          placeholder="Enter your name"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-1">Email Address</label>
+                        <input 
+                          type="email" 
+                          id="email" 
+                          className="w-full px-4 py-2 bg-dark-lighter border border-dark-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                          placeholder="Enter your email"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-400 mb-1">Password</label>
+                        <input 
+                          type="password" 
+                          id="password" 
+                          className="w-full px-4 py-2 bg-dark-lighter border border-dark-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                          placeholder="Create a password"
+                        />
+                      </div>
+                      <button type="submit" className="btn-primary w-full">
+                        Create Free Account
+                      </button>
+                      <p className="text-xs text-gray-400 text-center mt-4">
+                        By signing up, you agree to our Terms of Service and Privacy Policy.
+                      </p>
+                    </form>
+                  </div>
                 </div>
-                
-                <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-400 mb-1">Password</label>
-                  <input 
-                    type="password" 
-                    id="password" 
-                    className="w-full bg-dark-700 border border-dark-600 rounded-md py-2 px-4 text-white focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="Create a password"
-                  />
-                </div>
-                
-                <button 
-                  type="submit" 
-                  className="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-md font-medium transition-all duration-300"
-                >
-                  Create Your Account
-                </button>
-                
-                <p className="text-xs text-gray-500 text-center mt-4">
-                  By signing up, you agree to our <a href="#" className="text-primary-400 hover:text-primary-300">Terms of Service</a> and <a href="#" className="text-primary-400 hover:text-primary-300">Privacy Policy</a>
-                </p>
-              </form>
+              </div>
             </div>
           </motion.div>
         </div>

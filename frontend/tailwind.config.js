@@ -5,35 +5,41 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
+          DEFAULT: '#6366f1',
+          dark: '#4f46e5',
+          light: '#818cf8'
+        },
+        secondary: {
+          DEFAULT: '#10b981',
+          dark: '#059669',
+          light: '#34d399'
         },
         dark: {
-          100: '#d1d5db',
-          200: '#9ca3af',
-          300: '#6b7280',
-          400: '#4b5563',
-          500: '#374151',
-          600: '#1f2937',
-          700: '#111827',
-          800: '#0f172a',
-          900: '#0a0f1a',
-          950: '#030712',
+          DEFAULT: '#121212',
+          lighter: '#1e1e1e',
+          light: '#2d2d2d',
+          card: '#1a1a1a'
         },
+        light: {
+          DEFAULT: '#f9fafb',
+          dark: '#f3f4f6'
+        }
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        heading: ['Poppins', 'sans-serif']
       },
+      animation: {
+        'float': 'float 3s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        }
+      }
     },
   },
   plugins: [],
+  darkMode: 'class'
 };

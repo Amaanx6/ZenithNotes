@@ -1,87 +1,88 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, BookOpen, Sparkles } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
-    <div className="relative pt-20 pb-16 md:pt-24 md:pb-20">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-dark-950 z-0"></div>
-      
-      <div className="container-custom relative z-10">
+    <section id="home" className="pt-28 pb-20 md:pt-32 md:pb-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center">
-          <div className="w-full lg:w-1/2 mb-10 lg:mb-0">
-            <div className="flex items-center mb-4">
-              <div className="bg-primary-900/30 text-primary-400 px-3 py-1 rounded-full text-xs font-medium flex items-center">
-                <Sparkles className="h-3 w-3 mr-1" />
-                The Ultimate Study Platform for Students
-              </div>
+          {/* Text Content */}
+          <motion.div 
+            className="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary-light text-sm mb-6">
+              <Sparkles size={16} className="mr-2" />
+              <span>The Ultimate Study Platform for Students</span>
             </div>
             
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-4xl md:text-5xl font-bold mb-4"
-            >
-              <span className="text-primary-400">Zenith Notes</span> — Your Ultimate Study Companion
-            </motion.h1>
+            <h1 className="heading text-4xl md:text-5xl lg:text-6xl mb-6">
+              <span className="gradient-text">Zenith Notes</span> – Your Ultimate Study Companion
+            </h1>
             
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-gray-400 mb-8 text-lg"
-            >
-              Access assignments, question papers, question banks, and lab materials — all in one place. Elevate your academic performance with our comprehensive study platform.
-            </motion.p>
+            <p className="text-gray-300 text-lg md:text-xl mb-8 max-w-2xl mx-auto lg:mx-0">
+              Access assignments, question papers, question banks, and lab manuals – all in one place. Elevate your academic performance with our comprehensive study platform.
+            </p>
             
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex flex-wrap gap-4"
-            >
-              <Link to="/auth" className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-md font-medium transition-all duration-300 flex items-center">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+              <button className="btn-primary group w-full sm:w-auto text-lg">
                 Get Started
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-              <a href="#features" className="bg-dark-800 hover:bg-dark-700 text-white px-6 py-3 rounded-md font-medium transition-all duration-300 flex items-center">
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
+              </button>
+              <button className="btn-outline w-full sm:w-auto text-lg">
+                <BookOpen className="mr-2" size={20} />
                 Learn More
-              </a>
-            </motion.div>
-          </div>
+              </button>
+            </div>
+          </motion.div>
           
-          <div className="w-full lg:w-1/2 lg:pl-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.6 }}
-              className="relative"
-            >
-              <div className="bg-dark-800 rounded-xl overflow-hidden shadow-2xl border border-dark-700 relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1517842645767-c639042777db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                  alt="Zenith Notes Dashboard" 
-                  className="w-full h-auto rounded-t-xl"
-                />
-                
-                {/* Feature badges */}
-                <div className="absolute top-4 right-4 bg-dark-900/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-primary-400 flex items-center">
-                  <Sparkles className="h-3 w-3 mr-1" />
-                  AI-Powered
-                </div>
-                <div className="absolute bottom-4 left-4 bg-dark-900/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-gray-300 flex items-center">
-                  <span className="h-2 w-2 bg-green-500 rounded-full mr-1"></span>
-                  All-in-One Study Platform
+          {/* Hero Image */}
+          <motion.div 
+            className="lg:w-1/2"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary rounded-2xl blur-xl opacity-20 animate-pulse"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" 
+                alt="Student studying with Zenith Notes" 
+                className="relative rounded-2xl shadow-2xl w-full object-cover"
+              />
+              
+              {/* Floating Elements */}
+              <div className="absolute -top-6 -right-6 bg-dark-card p-4 rounded-lg shadow-lg border border-dark-light animate-float">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-primary/20 p-2 rounded-lg">
+                    <Sparkles className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">AI-Powered</p>
+                    <p className="text-xs text-gray-400">Smart Notes</p>
+                  </div>
                 </div>
               </div>
-            </motion.div>
-          </div>
+              
+              <div className="absolute -bottom-6 -left-6 bg-dark-card p-4 rounded-lg shadow-lg border border-dark-light animate-float" style={{ animationDelay: '1s' }}>
+                <div className="flex items-center space-x-3">
+                  <div className="bg-secondary/20 p-2 rounded-lg">
+                    <BookOpen className="h-6 w-6 text-secondary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">All-in-One</p>
+                    <p className="text-xs text-gray-400">Study Materials</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

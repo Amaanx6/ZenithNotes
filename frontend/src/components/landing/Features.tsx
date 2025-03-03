@@ -4,82 +4,90 @@ import {
   FileText, 
   Search, 
   Sparkles, 
-  BookOpen, 
+  FlaskConical, 
   Users, 
   MessageSquare 
 } from 'lucide-react';
 
 const features = [
   {
-    icon: <FileText className="feature-icon" />,
+    icon: <FileText className="h-10 w-10 text-primary" />,
     title: 'Multi-Format Support',
-    description: 'Access and view PDF, DOC, PPT, and image files seamlessly within the platform.'
+    description: 'Access and view PDF, DOC, PPT, and image files seamlessly within the platform.',
+    delay: 0.1
   },
   {
-    icon: <Search className="feature-icon" />,
+    icon: <Search className="h-10 w-10 text-primary" />,
     title: 'Advanced Search & Filters',
-    description: 'Find exactly what you need with powerful search capabilities and smart filters.'
+    description: 'Find exactly what you need with powerful search capabilities and customizable filters.',
+    delay: 0.2
   },
   {
-    icon: <Sparkles className="feature-icon" />,
+    icon: <Sparkles className="h-10 w-10 text-primary" />,
     title: 'AI-Powered Notes Generator',
-    description: 'Generate concise summaries and study notes automatically with our AI technology.'
+    description: 'Automatically generate summaries and highlights from your study materials.',
+    delay: 0.3
   },
   {
-    icon: <BookOpen className="feature-icon" />,
+    icon: <FlaskConical className="h-10 w-10 text-primary" />,
     title: 'Flashcards & Quizzes',
-    description: 'Create interactive flashcards and quizzes to enhance your learning experience.'
+    description: 'Create interactive learning tools to test your knowledge and improve retention.',
+    delay: 0.4
   },
   {
-    icon: <Users className="feature-icon" />,
+    icon: <Users className="h-10 w-10 text-primary" />,
     title: 'Collaborative Notes',
-    description: 'Share and collaborate on notes in real-time with classmates and study groups.'
+    description: 'Share and edit notes in real-time with classmates for group study sessions.',
+    delay: 0.5
   },
   {
-    icon: <MessageSquare className="feature-icon" />,
+    icon: <MessageSquare className="h-10 w-10 text-primary" />,
     title: 'Student Discussion Forum',
-    description: 'Connect with peers, ask questions, and participate in academic discussions.'
+    description: 'Ask questions, provide answers, and engage with peers in subject-specific forums.',
+    delay: 0.6
   }
 ];
 
 const Features: React.FC = () => {
   return (
-    <section id="features" className="py-20 bg-dark-950">
-      <div className="container-custom">
-        <div className="text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-3xl font-bold mb-4"
-          >
-            Powerful Features for <span className="text-primary-400">Effective Studying</span>
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto"
-          >
-            Zenith Notes combines powerful tools and innovative features to transform how you study, making learning more efficient and effective.
-          </motion.p>
-        </div>
+    <section id="features" className="py-20 bg-dark-lighter">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="heading text-3xl md:text-4xl mb-4">
+            Powerful Features for <span className="gradient-text">Effective Studying</span>
+          </h2>
+          <p className="text-gray-300 max-w-2xl mx-auto">
+            Zenith Notes combines powerful tools and innovative features to transform how you study, 
+            making learning more efficient and effective.
+          </p>
+        </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={index}
+              className="card group"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="feature-card"
+              transition={{ duration: 0.5, delay: feature.delay }}
+              whileHover={{ y: -5 }}
             >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
-              <p className="text-gray-400 text-sm">{feature.description}</p>
+              <div className="mb-4 p-3 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg inline-block">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                {feature.title}
+              </h3>
+              <p className="text-gray-400">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </div>
