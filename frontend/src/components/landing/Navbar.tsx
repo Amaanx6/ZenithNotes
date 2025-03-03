@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { motion } from 'framer-motion';
 import { Book, Menu, X } from 'lucide-react';
 
@@ -28,15 +29,15 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <Book className="h-8 w-8 text-primary" />
               <span className="text-xl font-heading font-bold text-white">Zenith Notes</span>
-            </a>
+            </Link>
           </div>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#home" className="text-gray-300 hover:text-white transition-colors">Home</a>
+            <Link to="/" className="text-gray-300 hover:text-white transition-colors">Home</Link>
             <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
             <a href="#how-it-works" className="text-gray-300 hover:text-white transition-colors">How It Works</a>
             <a href="#testimonials" className="text-gray-300 hover:text-white transition-colors">Testimonials</a>
@@ -45,8 +46,8 @@ const Navbar: React.FC = () => {
           
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <button className="btn-outline">Login</button>
-            <button className="btn-primary">Sign Up</button>
+            <Link to="/auth" className="btn-outline">Login</Link>
+            <Link to="/auth" className="btn-primary">Sign Up</Link>
           </div>
           
           {/* Mobile Menu Button */}
@@ -71,14 +72,14 @@ const Navbar: React.FC = () => {
           transition={{ duration: 0.3 }}
         >
           <div className="container mx-auto px-4 py-4 space-y-2">
-            <a href="#home" className="block py-2 text-gray-300 hover:text-white">Home</a>
+            <Link to="/" className="block py-2 text-gray-300 hover:text-white">Home</Link>
             <a href="#features" className="block py-2 text-gray-300 hover:text-white">Features</a>
             <a href="#how-it-works" className="block py-2 text-gray-300 hover:text-white">How It Works</a>
             <a href="#testimonials" className="block py-2 text-gray-300 hover:text-white">Testimonials</a>
             <a href="#contact" className="block py-2 text-gray-300 hover:text-white">Contact</a>
             <div className="pt-4 flex flex-col space-y-3">
-              <button className="btn-outline w-full">Login</button>
-              <button className="btn-primary w-full">Sign Up</button>
+              <Link to="/auth" className="btn-outline w-full">Login</Link>
+              <Link to="/auth" className="btn-primary w-full">Sign Up</Link>
             </div>
           </div>
         </motion.div>
