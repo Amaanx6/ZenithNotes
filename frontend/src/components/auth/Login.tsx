@@ -1,6 +1,9 @@
+// src/components/auth/Login.tsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import API from '../../utils/api';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +11,7 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,20 +25,21 @@ const Login: React.FC = () => {
     
     setIsLoading(true);
     
-    // Simulate API call
     try {
-      // In a real app, this would be an API call to your backend
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For demo purposes, we'll just log the user in
-      console.log('Logging in with:', { email, password });
-      
+      // Call the backend login endpoint
+      const response = await API.post('/auth/login', { email, password });
+      const { token } = response.data;
+
+      // Save the token to local storage
+      localStorage.setItem('token', token);
+
       // Reset form
       setEmail('');
       setPassword('');
       setIsLoading(false);
-      
-      // In a real app, you would redirect to the dashboard or set auth state
+
+      // Redirect to dashboard
+      navigate('/dashboard');
     } catch (err) {
       setError('Invalid email or password');
       setIsLoading(false);

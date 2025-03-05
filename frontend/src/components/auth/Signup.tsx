@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import API from '../../utils/api'; // Import the API utility
 
 const Signup: React.FC = () => {
   const [name, setName] = useState('');
@@ -33,22 +34,24 @@ const Signup: React.FC = () => {
     
     setIsLoading(true);
     
-    // Simulate API call
     try {
-      // In a real app, this would be an API call to your backend
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For demo purposes, we'll just log the registration
-      console.log('Registering user:', { name, email, password });
-      
+      // Call the backend register endpoint
+      const response = await API.post('/auth/register', { name, email, password });
+      const { token } = response.data;
+
+      // Save the token to local storage
+      localStorage.setItem('token', token);
+
       // Reset form
       setName('');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
       setIsLoading(false);
-      
-      // In a real app, you would redirect to the dashboard or login page
+
+      // Redirect to dashboard or home page
+      console.log('Registration successful!');
+      // Example: history.push('/dashboard');
     } catch (err) {
       setError('Registration failed. Please try again.');
       setIsLoading(false);

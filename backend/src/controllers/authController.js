@@ -1,15 +1,11 @@
-import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-import authMiddleware from '../middleware/authMiddleware.js';
 
-const router = express.Router();
-
-// @route   POST /api/auth/register
 // @desc    Register a new user
+// @route   POST /api/auth/register
 // @access  Public
-router.post('/register', async (req, res) => {
+export const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -53,12 +49,12 @@ router.post('/register', async (req, res) => {
     console.error(err.message);
     res.status(500).json({ message: 'Server error' });
   }
-});
+};
 
-// @route   POST /api/auth/login
 // @desc    Authenticate user & get token
+// @route   POST /api/auth/login
 // @access  Public
-router.post('/login', async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -94,12 +90,12 @@ router.post('/login', async (req, res) => {
     console.error(err.message);
     res.status(500).json({ message: 'Server error' });
   }
-});
+};
 
-// @route   GET /api/auth/user
 // @desc    Get user data
+// @route   GET /api/auth/user
 // @access  Private
-router.get('/user', authMiddleware, async (req, res) => {
+export const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
@@ -107,6 +103,4 @@ router.get('/user', authMiddleware, async (req, res) => {
     console.error(err.message);
     res.status(500).json({ message: 'Server error' });
   }
-});
-
-export default router;
+};
