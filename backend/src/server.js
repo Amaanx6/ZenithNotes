@@ -10,26 +10,12 @@ dotenv.config();
 // Initialize express app
 const app = express();
 
-// CORS configuration
-const corsOptions = {
-  origin: [
-    'https://zenith-notes-app.vercel.app',
-    'http://localhost:3000',
-    'http://localhost:5173',
-  ],
-  credentials: true,
+// Temporary permissive CORS for debugging
+app.use(cors({
+  origin: '*', // Allow all origins temporarily
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
-};
-
-// Apply CORS middleware
-app.use(cors(corsOptions));
-
-// Explicitly handle OPTIONS for all /api/auth/* routes
-app.options('/api/auth/*', (req, res) => {
-  console.log('Handling OPTIONS request for:', req.path);
-  res.status(200).end();
-});
+}));
 
 // Middleware
 app.use(express.json());
