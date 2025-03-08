@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'https://zenith-notes-app.vercel.app/', // Allow requests from this origin
+  origin: process.env.FRONTEND_URL || 'https://zenith-notes-app.vercel.app', // Allow requests from this origin
   credentials: true,
 };
 app.use(cors(corsOptions));
