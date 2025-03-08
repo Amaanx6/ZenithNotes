@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base URL from environment variable
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL, // Changed to match Vercel
+  baseURL: process.env.REACT_APP_API_BASE_URL, // Matches Vercel: https://zenith-notes-kho4.vercel.app
   headers: {
     'Content-Type': 'application/json',
   },
