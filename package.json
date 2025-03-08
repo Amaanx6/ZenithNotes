@@ -1,0 +1,29 @@
+{
+  "name": "zenith-notes",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "cd frontend && npm run build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm run dev",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "postinstall": "patch-package"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "patch-package": "^8.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.1",
+    "react-router-dom": "^7.2.0"
+  }
+}
