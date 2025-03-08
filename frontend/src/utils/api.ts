@@ -1,11 +1,8 @@
-// src/utils/api.ts
 import axios from 'axios';
 
 // Create axios instance with base URL from environment variable
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL
-    ? `${process.env.REACT_APP_API_BASE_URL}/api` // Add /api here
-    : 'http://localhost:5000/api', // Fallback for local development
+  baseURL: `${process.env.REACT_APP_API_BASE_URL}/api`, // No fallback to localhost
   headers: {
     'Content-Type': 'application/json',
   },
