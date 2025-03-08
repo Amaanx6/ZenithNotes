@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+// Log environment variable for debugging
+console.log('VITE_API_BASE_URL from env:', process.env.VITE_API_BASE_URL);
+
 // Create axios instance with base URL from environment variable
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL, // Matches Vercel: https://zenith-notes-kho4.vercel.app
+  baseURL: process.env.VITE_API_BASE_URL || 'https://zenith-notes-kho4.vercel.app', // Fallback for now
   headers: {
     'Content-Type': 'application/json',
   },
