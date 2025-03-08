@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base URL from environment variable
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL, // Standardized env variable name, no /api suffix here
+  baseURL: process.env.REACT_APP_API_BASE_URL, // Changed to match Vercel
   headers: {
     'Content-Type': 'application/json',
   },
