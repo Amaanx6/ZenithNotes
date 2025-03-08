@@ -13,11 +13,11 @@ const app = express();
 // CORS configuration
 const corsOptions = {
   origin: [
-    'https://zenith-notes-app.vercel.app', // Explicitly list the frontend URL
-    'http://localhost:3000', // For local dev
-    'http://localhost:5173', // For Vite dev
+    'https://zenith-notes-app.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:5173',
   ],
-  credentials: true, // Allow cookies/headers if needed
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
 };
@@ -27,6 +27,12 @@ app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());
+
+// Debug logging for all requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
