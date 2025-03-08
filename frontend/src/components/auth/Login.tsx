@@ -26,7 +26,9 @@ const Login: React.FC = () => {
     setIsLoading(true);
     
     try {
-      // Call the backend login endpoint
+      // The path should match what your backend expects
+      // If your backend is set up with '/api/auth/login', make sure your API utility
+      // either includes '/api' in the baseURL or you include it here
       const response = await API.post('/auth/login', { email, password });
       const { token } = response.data;
 
@@ -40,8 +42,21 @@ const Login: React.FC = () => {
 
       // Redirect to dashboard
       navigate('/dashboard');
-    } catch (err) {
-      setError('Invalid email or password');
+    } catch (err: any) {
+      console.error('Login error:', err);
+      
+      // More descriptive error handling
+      if (err.response) {
+        // The server responded with a status code outside the 2xx range
+        setError(err.response.data.message || 'Invalid email or password');
+      } else if (err.request) {
+        // The request was made but no response was received
+        setError('No response from server. Please check your connection.');
+      } else {
+        // Something happened in setting up the request
+        setError('An error occurred. Please try again.');
+      }
+      
       setIsLoading(false);
     }
   };

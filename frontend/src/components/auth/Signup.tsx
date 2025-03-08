@@ -58,6 +58,8 @@ const Signup: React.FC = () => {
       // Redirect to dashboard
       navigate('/dashboard');
     } catch (err: any) {
+      console.error('Registration error:', err);
+      
       if (err.response) {
         setError(err.response.data.message || 'Registration failed. Please try again.');
       } else if (err.request) {
