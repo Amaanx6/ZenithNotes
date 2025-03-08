@@ -3,8 +3,9 @@ import axios from 'axios';
 
 // Create axios instance with base URL from environment variable
 const API = axios.create({
-  // Make sure this includes /api if your backend routes are prefixed with /api
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: process.env.REACT_APP_API_BASE_URL
+    ? `${process.env.REACT_APP_API_BASE_URL}/api` // Add /api here
+    : 'http://localhost:5000/api', // Fallback for local development
   headers: {
     'Content-Type': 'application/json',
   },
@@ -28,8 +29,20 @@ API.interceptors.request.use(
 API.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Add global error handling here if needed
-    console.error('API Error:', error);
+    // Handle specific error statuses
+    if (error.response) {
+      if (error.response.status === 401) {
+        // Token expired or unauthorized
+        localStorage.removeItem('token'); // Clear the invalid token
+        window.location.href = '/login'; // Redirect to login page
+      }
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('No response from server:', error.request);
+    } else {
+      // Something happened in setting up the request
+      console.error('Request error:', error.message);
+    }
     return Promise.reject(error);
   }
 );

@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       // The path should match what your backend expects
       // If your backend is set up with '/api/auth/login', make sure your API utility
       // either includes '/api' in the baseURL or you include it here
-      const response = await API.post('/auth/login', { email, password });
+      const response = await API.post('/api/auth/login', { email, password });
       const { token } = response.data;
 
       // Save the token to local storage
