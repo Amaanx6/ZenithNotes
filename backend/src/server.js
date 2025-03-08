@@ -9,20 +9,21 @@ dotenv.config();
 
 // Initialize express app
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // CORS configuration
 const corsOptions = {
   origin: [
-    /https?:\/\/(zenith-notes-app\.vercel\.app|localhost:3000|localhost:5173)/,
+    'https://zenith-notes-app.vercel.app', // Explicitly list the frontend URL
+    'http://localhost:3000', // For local dev
+    'http://localhost:5173', // For Vite dev
   ],
-  credentials: true,
+  credentials: true, // Allow cookies/headers if needed
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
 };
 
+// Apply CORS middleware
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight requests
 
 // Middleware
 app.use(express.json());
@@ -45,9 +46,12 @@ mongoose
     console.error('MongoDB connection error:', err);
   });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Start server (only for local dev; Vercel handles this in production)
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
 export default app;
