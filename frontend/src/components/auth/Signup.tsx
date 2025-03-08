@@ -42,7 +42,7 @@ const Signup: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await API.post('/auth/register', { name, email, password });
+      const response = await API.post('/api/auth/register', { name, email, password });
       const { token } = response.data;
 
       // Save the token to local storage
