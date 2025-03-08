@@ -6,6 +6,13 @@ import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
+// @route   OPTIONS /api/auth/register
+// @desc    Handle CORS preflight for register
+// @access  Public
+router.options('/register', (req, res) => {
+  res.status(200).end();
+});
+
 // @route   POST /api/auth/register
 // @desc    Register a new user
 // @access  Public
