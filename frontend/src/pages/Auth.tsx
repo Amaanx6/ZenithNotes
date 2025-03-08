@@ -5,7 +5,11 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const Auth: React.FC = () => {
+interface AuthProps {
+  setUser: (user: any) => void;
+}
+
+const Auth: React.FC<AuthProps> = ({ setUser }) => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
@@ -37,14 +41,14 @@ const Auth: React.FC = () => {
             </p>
           </div>
           
-          {isLogin ? <Login /> : <Signup />}
+          {isLogin ? <Login setUser={setUser} /> : <Signup setUser={setUser} />}
           
           <div className="text-center mt-4">
             <button 
               onClick={() => setIsLogin(!isLogin)}
               className="text-primary-400 hover:text-primary-300 text-sm font-medium"
             >
-              { isLogin 
+              {isLogin 
                 ? "Don't have an account? Sign up" 
                 : "Already have an account? Log in"}
             </button>

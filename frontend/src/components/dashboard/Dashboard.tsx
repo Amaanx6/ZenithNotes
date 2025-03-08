@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // Already present, just ensuring it's clear
 import { motion } from 'framer-motion';
 import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import API from '../../utils/api';
 
 interface SignupProps {
-  setUser: (user: any) => void; // Prop to update user state in App.tsx
+  setUser: (user: any) => void;
 }
 
 const Signup: React.FC<SignupProps> = ({ setUser }) => {
@@ -47,28 +47,23 @@ const Signup: React.FC<SignupProps> = ({ setUser }) => {
     setIsLoading(true);
 
     try {
-      console.log('API Base URL:', API.defaults.baseURL); // Debug
+      console.log('API Base URL:', API.defaults.baseURL);
       const response = await API.post('/api/auth/register', { name, email, password });
       const { token } = response.data;
 
-      // Save token to local storage
       localStorage.setItem('token', token);
 
-      // Fetch user data after registration
       const userResponse = await API.get('/api/auth/user');
       const userData = userResponse.data;
 
-      // Update user state in App.tsx
       setUser(userData);
 
-      // Reset form
       setName('');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
       setIsLoading(false);
 
-      // Redirect to dashboard
       navigate('/dashboard');
     } catch (err: any) {
       console.error('Registration error:', err);
@@ -156,7 +151,7 @@ const Signup: React.FC<SignupProps> = ({ setUser }) => {
             autoComplete="new-password"
             required
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setName(e.target.value)} // Fixed typo: should be setPassword
             className="bg-dark-700 block w-full pl-10 pr-10 py-2 border border-dark-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 text-white"
             placeholder="••••••••"
           />

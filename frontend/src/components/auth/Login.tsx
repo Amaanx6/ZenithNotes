@@ -1,11 +1,14 @@
-// src/components/auth/Login.tsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import API from '../../utils/api';
 
-const Login: React.FC = () => {
+interface LoginProps {
+  setUser: (user: any) => void; // Prop to update user state in App.tsx
+}
+
+const Login: React.FC<LoginProps> = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -16,24 +19,27 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
-    // Basic validation
+
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
-      // The path should match what your backend expects
-      // If your backend is set up with '/api/auth/login', make sure your API utility
-      // either includes '/api' in the baseURL or you include it here
       const response = await API.post('/api/auth/login', { email, password });
       const { token } = response.data;
 
-      // Save the token to local storage
+      // Save token to local storage
       localStorage.setItem('token', token);
+
+      // Fetch user data after login
+      const userResponse = await API.get('/api/auth/user');
+      const userData = userResponse.data;
+
+      // Update user state in App.tsx
+      setUser(userData);
 
       // Reset form
       setEmail('');
@@ -44,25 +50,19 @@ const Login: React.FC = () => {
       navigate('/dashboard');
     } catch (err: any) {
       console.error('Login error:', err);
-      
-      // More descriptive error handling
       if (err.response) {
-        // The server responded with a status code outside the 2xx range
         setError(err.response.data.message || 'Invalid email or password');
       } else if (err.request) {
-        // The request was made but no response was received
         setError('No response from server. Please check your connection.');
       } else {
-        // Something happened in setting up the request
         setError('An error occurred. Please try again.');
       }
-      
       setIsLoading(false);
     }
   };
 
   return (
-    <motion.form 
+    <motion.form
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
@@ -74,7 +74,6 @@ const Login: React.FC = () => {
           {error}
         </div>
       )}
-      
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
           Email Address
@@ -108,7 +107,7 @@ const Login: React.FC = () => {
           <input
             id="password"
             name="password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             autoComplete="current-password"
             required
             value={password}
@@ -122,11 +121,7 @@ const Login: React.FC = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="text-gray-500 hover:text-gray-400 focus:outline-none"
             >
-              {showPassword ? (
-                <EyeOff className="h-5 w-5" />
-              ) : (
-                <Eye className="h-5 w-5" />
-              )}
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
           </div>
         </div>
@@ -144,7 +139,6 @@ const Login: React.FC = () => {
             Remember me
           </label>
         </div>
-
         <div className="text-sm">
           <a href="#" className="font-medium text-primary-400 hover:text-primary-300">
             Forgot your password?
