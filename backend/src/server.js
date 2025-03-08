@@ -25,6 +25,12 @@ const corsOptions = {
 // Apply CORS middleware
 app.use(cors(corsOptions));
 
+// Explicitly handle OPTIONS for all /api/auth/* routes
+app.options('/api/auth/*', (req, res) => {
+  console.log('Handling OPTIONS request for:', req.path);
+  res.status(200).end();
+});
+
 // Middleware
 app.use(express.json());
 

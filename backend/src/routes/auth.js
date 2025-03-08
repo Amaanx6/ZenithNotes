@@ -6,13 +6,6 @@ import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// @route   OPTIONS /api/auth/register
-// @desc    Handle CORS preflight for register
-// @access  Public
-router.options('/register', (req, res) => {
-  res.status(200).end();
-});
-
 // @route   POST /api/auth/register
 // @desc    Register a new user
 // @access  Public
@@ -77,7 +70,7 @@ router.post('/login', async (req, res) => {
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
