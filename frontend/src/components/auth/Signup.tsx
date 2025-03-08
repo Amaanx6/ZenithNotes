@@ -23,7 +23,6 @@ const Signup: React.FC = () => {
     e.preventDefault();
     setError('');
 
-    // Basic validation
     if (!name || !email || !password || !confirmPassword) {
       setError('Please fill in all fields');
       return;
@@ -42,24 +41,19 @@ const Signup: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await API.post('/auth/register', { name, email, password });
+      console.log('API Base URL:', API.defaults.baseURL); // Debug
+      const response = await API.post('/api/auth/register', { name, email, password });
       const { token } = response.data;
 
-      // Save the token to local storage
       localStorage.setItem('token', token);
-
-      // Reset form
       setName('');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
       setIsLoading(false);
-
-      // Redirect to dashboard
       navigate('/dashboard');
     } catch (err: any) {
       console.error('Registration error:', err);
-      
       if (err.response) {
         setError(err.response.data.message || 'Registration failed. Please try again.');
       } else if (err.request) {
