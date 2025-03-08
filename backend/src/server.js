@@ -10,12 +10,20 @@ dotenv.config();
 // Initialize express app
 const app = express();
 
-// Temporary permissive CORS for debugging
-app.use(cors({
-  origin: '*', // Allow all origins temporarily
+// CORS configuration (for other routes)
+const corsOptions = {
+  origin: [
+    'https://zenith-notes-app.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:5173',
+  ],
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
-}));
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());
@@ -44,6 +52,9 @@ mongoose
     console.error('MongoDB connection error:', err);
   });
 
+// Export handler for serverless use
+export const handler = app;
+
 // Start server (only for local dev; Vercel handles this in production)
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
@@ -51,5 +62,3 @@ if (process.env.NODE_ENV !== 'production') {
     console.log(`Server running on port ${PORT}`);
   });
 }
-
-export default app;
