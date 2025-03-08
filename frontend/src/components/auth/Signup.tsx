@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import API from '../../utils/api'; // Import the API utility
+import { useNavigate } from 'react-router-dom';
+import API from '../../utils/api';
 
 const Signup: React.FC = () => {
   const [name, setName] = useState('');
@@ -11,31 +12,36 @@ const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const validatePassword = (password: string) => {
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
+
     // Basic validation
     if (!name || !email || !password || !confirmPassword) {
       setError('Please fill in all fields');
       return;
     }
-    
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters long');
+
+    if (!validatePassword(password)) {
+      setError('Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character.');
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
-      // Call the backend register endpoint
       const response = await API.post('/auth/register', { name, email, password });
       const { token } = response.data;
 
@@ -49,11 +55,16 @@ const Signup: React.FC = () => {
       setConfirmPassword('');
       setIsLoading(false);
 
-      // Redirect to dashboard or home page
-      console.log('Registration successful!');
-      // Example: history.push('/dashboard');
-    } catch (err) {
-      setError('Registration failed. Please try again.');
+      // Redirect to dashboard
+      navigate('/dashboard');
+    } catch (err: any) {
+      if (err.response) {
+        setError(err.response.data.message || 'Registration failed. Please try again.');
+      } else if (err.request) {
+        setError('No response from the server. Please check your connection.');
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
       setIsLoading(false);
     }
   };
@@ -71,7 +82,7 @@ const Signup: React.FC = () => {
           {error}
         </div>
       )}
-      
+
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
           Full Name
