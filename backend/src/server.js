@@ -30,19 +30,28 @@ app.use(cors({
   origin: 'https://zenith-notes-app.vercel.app',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'x-auth-token'],
-  credentials: true // Optional
+  credentials: true
 }));
 
 // Parse JSON bodies
 app.use(express.json());
 
+// Debug route to confirm server is working
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Server is running' });
+});
+
 // Mount auth routes
 app.use('/api/auth', authRouter);
 
-// Export for Vercel
+// Catch-all for debugging 404s
+app.use((req, res) => {
+  console.log(`Route not found: ${req.method} ${req.url}`);
+  res.status(404).json({ message: 'Not Found' });
+});
+
 export const handler = app;
 
-// For local development
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
