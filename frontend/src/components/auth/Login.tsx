@@ -17,46 +17,32 @@ const Login: React.FC = () => {
     e.preventDefault();
     setError('');
     
-    // Basic validation
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
     
     setIsLoading(true);
+    console.log('Requesting:', API.defaults.baseURL + '/api/auth/login');
     
     try {
-      // The path should match what your backend expects
-      // If your backend is set up with '/api/auth/login', make sure your API utility
-      // either includes '/api' in the baseURL or you include it here
       const response = await API.post('/api/auth/login', { email, password });
       const { token } = response.data;
 
-      // Save the token to local storage
       localStorage.setItem('token', token);
-
-      // Reset form
       setEmail('');
       setPassword('');
       setIsLoading(false);
-
-      // Redirect to dashboard
       navigate('/dashboard');
     } catch (err: any) {
       console.error('Login error:', err);
-      
-      // More descriptive error handling
       if (err.response) {
-        // The server responded with a status code outside the 2xx range
         setError(err.response.data.message || 'Invalid email or password');
       } else if (err.request) {
-        // The request was made but no response was received
         setError('No response from server. Please check your connection.');
       } else {
-        // Something happened in setting up the request
         setError('An error occurred. Please try again.');
       }
-      
       setIsLoading(false);
     }
   };
@@ -74,7 +60,6 @@ const Login: React.FC = () => {
           {error}
         </div>
       )}
-      
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
           Email Address
@@ -96,7 +81,6 @@ const Login: React.FC = () => {
           />
         </div>
       </div>
-
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
           Password
@@ -122,16 +106,11 @@ const Login: React.FC = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="text-gray-500 hover:text-gray-400 focus:outline-none"
             >
-              {showPassword ? (
-                <EyeOff className="h-5 w-5" />
-              ) : (
-                <Eye className="h-5 w-5" />
-              )}
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
           </div>
         </div>
       </div>
-
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <input
@@ -144,14 +123,12 @@ const Login: React.FC = () => {
             Remember me
           </label>
         </div>
-
         <div className="text-sm">
           <a href="#" className="font-medium text-primary-400 hover:text-primary-300">
             Forgot your password?
           </a>
         </div>
       </div>
-
       <div>
         <button
           type="submit"

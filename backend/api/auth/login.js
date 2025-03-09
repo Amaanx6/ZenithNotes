@@ -1,6 +1,6 @@
-// api/auth/register.js
+// api/auth/login.js
 import cors from 'cors';
-import { handler as expressHandler } from '../../src/server.js'; // Adjust path
+import { handler as expressHandler } from '../../src/server.js'; // Adjust path to your Express app
 
 // CORS middleware
 const corsMiddleware = cors({

@@ -4,20 +4,12 @@
     {
       "src": "src/server.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "api/auth/register.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/auth/register",
-      "dest": "/api/auth/register.js"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/src/server.js"
+      "dest": "src/server.js"
     }
   ]
 }
